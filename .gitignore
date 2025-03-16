@@ -1,0 +1,57 @@
+# Ignore build directories
+/build/
+/target/
+
+# Ignore IDE-specific files
+/.idea/
+/*.iml
+*.class
+*.log
+*.swp
+*.swo
+*.swn
+*.bak
+
+# Ignore Maven dependencies
+.mvn/
+!src/main/webapp/WEB-INF/lib/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ignore compiled Java files
+*.class
+*.jar
+*.war
+*.ear
+
+# Ignore logs and temporary files
+/logs/
+/*.log
+hs_err_pid*
+
+# Ignore environment and configuration files
+.env
+*.properties
+*.yml
+*.yaml
+
+# Ignore generated documentation
+/doc/
+/docs/
+
+# Ignore database files
+*.db
+*.sqlite
+
+# Ignore dependency files
+/node_modules/
+/vendor/
+
+# Ignore Webapp cache files
+/webapp/cache/
+
+# Ignore test reports
+/test-output/
