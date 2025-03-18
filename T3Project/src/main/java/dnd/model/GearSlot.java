@@ -8,7 +8,6 @@ public class GearSlot {
 	
 	// constructor 
 	public GearSlot(int slotID, String slotName) {
-		super();
 		this.slotID = slotID;
 		this.slotName = slotName;
 	}
