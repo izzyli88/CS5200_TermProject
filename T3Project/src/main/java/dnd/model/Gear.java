@@ -43,7 +43,7 @@ public class Gear extends EquippableItem{
 	@Override
 	  public String toString() {
 	    return String.format(
-	      "Equippable(%s, %s)",
+	      "Gear(%s, %s)",
 	      super.fieldsToString(),
 	      this.gearSlot.toString()
 	    );
