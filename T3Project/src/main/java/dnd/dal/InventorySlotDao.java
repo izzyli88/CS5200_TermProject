@@ -16,7 +16,7 @@ public class InventorySlotDao {
 	private InventorySlotDao() {}
 	
 	
-	public static InventorySlot create(Connection cxn, GameCharacter character, int slotNumber, ItemPrototype prototype, int stackSize) throws SQLException{
+	public static InventorySlot create(Connection cxn, GameCharacter character, int slotNumber, ItemPrototypeDao prototype, int stackSize) throws SQLException{
 		return null;
 	}
 	
