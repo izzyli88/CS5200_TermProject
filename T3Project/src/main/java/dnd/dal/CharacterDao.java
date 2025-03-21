@@ -39,13 +39,9 @@ public class CharacterDao{
 			return new GameCharacter(Utils.getAutoIncrementKey(insertStmt), player, firstName, lastName, clan, currentJob, currWeapon);
 		}
 	}
+	
+	public static GameCharacter getCharFromCharID(Connection cxn, int charID) throws SQLException {
+		return null;
+	}
 		
 }
-	
-	
-//	private Player player;
-//	private String firstName;
-//	private String lastName;
-//	private Clan clan;
-//	private Job currentJob;
-//	private Weapon currWeapon;
