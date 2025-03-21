@@ -11,7 +11,7 @@ public class InventorySlot {
 	private static final int DEFAULT_STACK_SIZE = 1;
 
 	
-	public InventorySlot(int inventoryID, Character character, int slotNumber, ItemPrototype prototypeID,
+	public InventorySlot(Character character, int slotNumber, ItemPrototype prototypeID,
 			Integer stackSize) {
 		this.character = character;
 		this.slotNumber = slotNumber;
