@@ -9,20 +9,18 @@ public class ItemPrototype{
 	private float itemPrice;
 	private int itemMaxStackSize;
 	
-	protected static final int DEFAULT_ITEM_LEVEL = 1;
 	protected static final float DEFAULT_ITEM_PRICE = 0;
-	protected static final int DEFAULT_ITEM_MAX_STACK_SIZE = 99;
 
 	
 	// general constructor for different combinations of default values
 	// IMPT: When call, pass all 5 args, to use defaults set --> null
 	
-	public ItemPrototype(int prototypeID, String itemName, Integer itemLevel, Float itemPrice, Integer itemMaxStackSize) {
+	public ItemPrototype(int prototypeID, String itemName, int itemLevel, Float itemPrice, int itemMaxStackSize) {
 	    this.prototypeID = prototypeID;
 	    this.itemName = itemName;
-	    this.itemLevel = (itemLevel != null) ? itemLevel : DEFAULT_ITEM_LEVEL;
+	    this.itemLevel = itemLevel;
 	    this.itemPrice = (itemPrice != null) ? itemPrice : DEFAULT_ITEM_PRICE;
-	    this.itemMaxStackSize = (itemMaxStackSize != null) ? itemMaxStackSize : DEFAULT_ITEM_MAX_STACK_SIZE;
+	    this.itemMaxStackSize = itemMaxStackSize;
 	}
 
 	// getters/setters

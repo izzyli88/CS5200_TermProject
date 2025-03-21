@@ -3,7 +3,6 @@ package dnd.model;
 import java.util.Objects;
 
 public class InventorySlot {
-	private int inventoryID;
 	private Character character;
 	private int slotNumber;
 	private ItemPrototype prototypeID;
@@ -14,21 +13,10 @@ public class InventorySlot {
 	
 	public InventorySlot(int inventoryID, Character character, int slotNumber, ItemPrototype prototypeID,
 			Integer stackSize) {
-		this.inventoryID = inventoryID;
 		this.character = character;
 		this.slotNumber = slotNumber;
 		this.prototypeID = prototypeID;
 		this.stackSize = stackSize != null ? stackSize : DEFAULT_STACK_SIZE;
-	}
-
-
-	public int getInventoryID() {
-		return inventoryID;
-	}
-
-
-	public void setInventoryID(int inventoryID) {
-		this.inventoryID = inventoryID;
 	}
 
 
@@ -74,7 +62,7 @@ public class InventorySlot {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(character, inventoryID, prototypeID, slotNumber, stackSize);
+		return Objects.hash(character, prototypeID, slotNumber, stackSize);
 	}
 
 
@@ -87,7 +75,7 @@ public class InventorySlot {
 		if (getClass() != obj.getClass())
 			return false;
 		InventorySlot other = (InventorySlot) obj;
-		return Objects.equals(character, other.character) && inventoryID == other.inventoryID
+		return Objects.equals(character, other.character)
 				&& Objects.equals(prototypeID, other.prototypeID) && slotNumber == other.slotNumber
 				&& stackSize == other.stackSize;
 	}
@@ -95,7 +83,7 @@ public class InventorySlot {
 
 	@Override
 	public String toString() {
-		return "InventorySlot [inventoryID=" + inventoryID + ", character=" + character + ", slotNumber=" + slotNumber
+		return "InventorySlot [character=" + character + ", slotNumber=" + slotNumber
 				+ ", prototypeID=" + prototypeID + ", stackSize=" + stackSize + "]";
 	}
 

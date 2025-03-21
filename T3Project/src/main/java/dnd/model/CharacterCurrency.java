@@ -3,7 +3,7 @@ package dnd.model;
 import java.util.Objects;
 
 public class CharacterCurrency {
-	private Character character;
+	private GameCharacter character;
 	private Currency currency;
 	private int amountHeld;
 	private int amountEarnedThisWeek;
@@ -12,7 +12,7 @@ public class CharacterCurrency {
 	private static final int DEFAULT_AMOUNT_EARNED = 0;
 	
 	
-	public CharacterCurrency(Character character, Currency currency, Integer amountHeld, Integer amountEarnedThisWeek) {
+	public CharacterCurrency(GameCharacter character, Currency currency, Integer amountHeld, Integer amountEarnedThisWeek) {
 		this.character = character;
 		this.currency = currency;
 		this.amountHeld = amountHeld != null ? amountHeld : DEFAULT_AMOUNT_HELD;
@@ -20,12 +20,12 @@ public class CharacterCurrency {
 	}
 
 
-	public Character getCharacter() {
+	public GameCharacter getCharacter() {
 		return character;
 	}
 
 
-	public void setCharacter(Character character) {
+	public void setCharacter(GameCharacter character) {
 		this.character = character;
 	}
 

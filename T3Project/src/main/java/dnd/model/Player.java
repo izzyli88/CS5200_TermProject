@@ -10,7 +10,6 @@ public class Player {
 	
 	// constructor
 	public Player(int playerID, String fullName, String email) {
-		super();
 		this.playerID = playerID;
 		this.fullName = fullName;
 		this.email = email;

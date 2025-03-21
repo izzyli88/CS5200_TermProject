@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class CharacterJob {
 	private Job job;
-	private Character character;
+	private GameCharacter character;
 	private int level;
 	private int experiencePoints;
 	private boolean unlocked;
@@ -14,7 +14,7 @@ public class CharacterJob {
 	private static final boolean DEFAULT_UNLOCKED = false;
 	
 	
-	public CharacterJob(Job job, Character character, Integer level, Integer experiencePoints, Boolean unlocked) {
+	public CharacterJob(Job job, GameCharacter character, Integer level, Integer experiencePoints, Boolean unlocked) {
 		this.job = job;
 		this.character = character;
 		this.level = level != null ? level : DEFAULT_LEVEL;
@@ -33,12 +33,12 @@ public class CharacterJob {
 	}
 
 
-	public Character getCharacter() {
+	public GameCharacter getCharacter() {
 		return character;
 	}
 
 
-	public void setCharacter(Character character) {
+	public void setCharacter(GameCharacter character) {
 		this.character = character;
 	}
 

@@ -9,7 +9,6 @@ public class ConsumableBonus {
 	private float bonusCap;
 	
 	public ConsumableBonus(Statistic statistic, Consumable consumable, float bonusPercentage, float bonusCap) {
-		super();
 		this.statistic = statistic;
 		this.consumable = consumable;
 		this.bonusPercentage = bonusPercentage;

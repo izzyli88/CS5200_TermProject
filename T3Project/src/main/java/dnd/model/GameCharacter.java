@@ -2,30 +2,30 @@ package dnd.model;
 
 import java.util.Objects;
 
-public class Character {
+public class GameCharacter {
 	private int characterID;
 	private Player player;
 	private String firstName;
 	private String lastName;
 	private Clan clan;
 	private Job currentJob;
-	private Weapon currWeapon;
+	private Weapon equippedWeapon;
 	
 	// constructor
-	public Character(int characterID,
+	public GameCharacter(int characterID,
 			Player player,
 			String firstName,
 			String lastName,
 			Clan clan,
 			Job currentJob,
-			Weapon currWeapon) {
+			Weapon equippedWeapon) {
 		this.characterID = characterID;
 		this.player = player;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.clan = clan;
 		this.currentJob = currentJob;
-		this.currWeapon = currWeapon;
+		this.equippedWeapon = equippedWeapon;
 	}
 	
 	// getters/setters
@@ -80,18 +80,18 @@ public class Character {
 	
 	
 	public Weapon getCurrWeapon() {
-		return currWeapon;
+		return equippedWeapon;
 	}
 
 	public void setCurrWeapon(Weapon currWeapon) {
-		this.currWeapon = currWeapon;
+		this.equippedWeapon = currWeapon;
 	}
 	
 	// equals/hash/toString
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(characterID, clan, currWeapon, currentJob, firstName, lastName, player);
+		return Objects.hash(characterID, clan, equippedWeapon, currentJob, firstName, lastName, player);
 	}
 
 	@Override
@@ -102,18 +102,18 @@ public class Character {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Character other = (Character) obj;
+		GameCharacter other = (GameCharacter) obj;
 		return characterID == other.characterID && Objects.equals(clan, other.clan)
-				&& Objects.equals(currWeapon, other.currWeapon) && Objects.equals(currentJob, other.currentJob)
+				&& Objects.equals(equippedWeapon, other.equippedWeapon) && Objects.equals(currentJob, other.currentJob)
 				&& Objects.equals(firstName, other.firstName) && Objects.equals(lastName, other.lastName)
 				&& Objects.equals(player, other.player);
 	}
 
 	@Override
 	public String toString() {
-		return "Character [characterID=" + characterID + ", player=" + player + ", firstName=" + firstName
+		return "GameCharacter [characterID=" + characterID + ", player=" + player + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", clan=" + clan + ", currentJob=" + currentJob + ", currWeapon="
-				+ currWeapon + "]";
+				+ equippedWeapon + "]";
 	}
 	
 	

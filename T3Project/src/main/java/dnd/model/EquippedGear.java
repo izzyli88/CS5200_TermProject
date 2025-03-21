@@ -3,26 +3,26 @@ package dnd.model;
 import java.util.Objects;
 
 public class EquippedGear {
-	private Character character;
+	private GameCharacter character;
 	private GearSlot gearSlot;
 	private Gear gear;
 	
-	public EquippedGear(Character character, GearSlot gearSlot, Gear gear) {
+	public EquippedGear(GameCharacter character, GearSlot gearSlot, Gear gear) {
 		this.character = character;
 		this.gearSlot = gearSlot;
 		this.gear = gear;
 	}
 	
-	public EquippedGear(Character character, GearSlot gearSlot) {
+	public EquippedGear(GameCharacter character, GearSlot gearSlot) {
 		this.character = character;
 		this.gearSlot = gearSlot;
 	}
 
-	public Character getCharacter() {
+	public GameCharacter getCharacter() {
 		return character;
 	}
 
-	public void setCharacter(Character character) {
+	public void setCharacter(GameCharacter character) {
 		this.character = character;
 	}
 

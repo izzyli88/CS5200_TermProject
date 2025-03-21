@@ -3,16 +3,60 @@ package dnd.model;
 import java.util.Objects;
 
 public class CharacterStats {
-	private Character character;
+	private GameCharacter character;
 	private Statistic statistic;
 	private int value;
 	
 	
-	public CharacterStats(Character character, Statistic statistic, int value) {
+	public CharacterStats(GameCharacter character, Statistic statistic, int value) {
 		this.character = character;
 		this.statistic = statistic;
 		this.value = value;
 	}
+	
+	
+
+
+	public GameCharacter getCharacter() {
+		return character;
+	}
+
+
+
+
+	public void setCharacter(GameCharacter character) {
+		this.character = character;
+	}
+
+
+
+
+	public Statistic getStatistic() {
+		return statistic;
+	}
+
+
+
+
+	public void setStatistic(Statistic statistic) {
+		this.statistic = statistic;
+	}
+
+
+
+
+	public int getValue() {
+		return value;
+	}
+
+
+
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+
+
 
 
 	@Override

@@ -7,7 +7,6 @@ public class Statistic {
 	private String statisticName;
 	
 	public Statistic(int statisticID, String statisticName) {
-		super();
 		this.statisticID = statisticID;
 		this.statisticName = statisticName;
 	}

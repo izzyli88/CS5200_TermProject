@@ -9,7 +9,6 @@ public class EquippableBonus {
 	
 	
 	public EquippableBonus(Statistic statistic, EquippableItem equippableItem, int bonusValue) {
-		super();
 		this.statistic = statistic;
 		this.equippableItem = equippableItem;
 		this.bonusValue = bonusValue;

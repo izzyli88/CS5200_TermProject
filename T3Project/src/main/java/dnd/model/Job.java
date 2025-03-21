@@ -8,7 +8,6 @@ public class Job {
 	
 	// constructor
 	public Job(int jobID, String jobName) {
-		super();
 		this.jobID = jobID;
 		this.jobName = jobName;
 	}

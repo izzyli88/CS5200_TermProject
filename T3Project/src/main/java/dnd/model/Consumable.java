@@ -5,11 +5,11 @@ public class Consumable extends ItemPrototype{
 	
 	// constructor
 	// always input all 5 args, to use default vals, set as null
-	public Consumable(int prototypeID, String itemName, Integer itemLevel, Float itemPrice, Integer itemMaxStackSize) {
+	public Consumable(int prototypeID, String itemName, int itemLevel, Float itemPrice, int itemMaxStackSize) {
         super(prototypeID, itemName,
-        		itemLevel != null ? itemLevel : DEFAULT_ITEM_LEVEL, 
+        		itemLevel,
 	            itemPrice != null ? itemPrice : DEFAULT_ITEM_PRICE, 
-	            itemMaxStackSize != null ? itemMaxStackSize : DEFAULT_ITEM_MAX_STACK_SIZE);
+	            itemMaxStackSize);
     }
 
 	@Override
