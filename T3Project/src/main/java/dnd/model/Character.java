@@ -9,6 +9,7 @@ public class Character {
 	private String lastName;
 	private Clan clan;
 	private Job currentJob;
+	private Weapon currWeapon;
 	
 	// constructor
 	public Character(int characterID,
@@ -16,13 +17,15 @@ public class Character {
 			String firstName,
 			String lastName,
 			Clan clan,
-			Job currentJob) {
+			Job currentJob,
+			Weapon currWeapon) {
 		this.characterID = characterID;
 		this.player = player;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.clan = clan;
 		this.currentJob = currentJob;
+		this.currWeapon = currWeapon;
 	}
 	
 	// getters/setters
@@ -75,11 +78,20 @@ public class Character {
 		this.currentJob = currentJob;
 	}
 	
+	
+	public Weapon getCurrWeapon() {
+		return currWeapon;
+	}
+
+	public void setCurrWeapon(Weapon currWeapon) {
+		this.currWeapon = currWeapon;
+	}
+	
 	// equals/hash/toString
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(characterID, clan, currentJob, firstName, lastName, player);
+		return Objects.hash(characterID, clan, currWeapon, currentJob, firstName, lastName, player);
 	}
 
 	@Override
@@ -92,15 +104,20 @@ public class Character {
 			return false;
 		Character other = (Character) obj;
 		return characterID == other.characterID && Objects.equals(clan, other.clan)
-				&& Objects.equals(currentJob, other.currentJob) && Objects.equals(firstName, other.firstName)
-				&& Objects.equals(lastName, other.lastName) && Objects.equals(player, other.player);
+				&& Objects.equals(currWeapon, other.currWeapon) && Objects.equals(currentJob, other.currentJob)
+				&& Objects.equals(firstName, other.firstName) && Objects.equals(lastName, other.lastName)
+				&& Objects.equals(player, other.player);
 	}
 
 	@Override
 	public String toString() {
 		return "Character [characterID=" + characterID + ", player=" + player + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", clan=" + clan + ", currentJob=" + currentJob + "]";
+				+ ", lastName=" + lastName + ", clan=" + clan + ", currentJob=" + currentJob + ", currWeapon="
+				+ currWeapon + "]";
 	}
+	
+	
+	
 	
 	
 	
