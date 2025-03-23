@@ -2,8 +2,8 @@ package dnd.model;
 
 import java.util.Objects;
 
-public class EquippableItem extends ItemPrototype {
-	private int requiredLevel;
+public abstract class EquippableItem extends ItemPrototype {
+	protected int requiredLevel;
 	
 	private static final int DEFAULT_REQUIRED_LEVEL = 1;
 

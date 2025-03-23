@@ -2,12 +2,12 @@ package dnd.model;
 
 import java.util.Objects;
 
-public class ItemPrototype{
-	private int prototypeID;
-	private String itemName;
-	private int itemLevel;
-	private float itemPrice;
-	private int itemMaxStackSize;
+public abstract class ItemPrototype{
+	protected int prototypeID;
+	protected String itemName;
+	protected int itemLevel;
+	protected float itemPrice;
+	protected int itemMaxStackSize;
 	
 	protected static final float DEFAULT_ITEM_PRICE = 0;
 
