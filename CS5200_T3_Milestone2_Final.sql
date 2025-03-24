@@ -124,7 +124,7 @@ CREATE TABLE CharacterStats (
 -- ===========================
 CREATE TABLE ItemPrototype (
     prototypeID INT AUTO_INCREMENT PRIMARY KEY,
-    itemName VARCHAR(100) UNIQUE NOT NULL,
+    itemName VARCHAR(100) NOT NULL,
     itemLevel INT NOT NULL,
     itemPrice DECIMAL(10,2) DEFAULT 0,
     itemMaxStackSize INT NOT NULL

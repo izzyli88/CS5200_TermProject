@@ -41,7 +41,31 @@ public class CharacterDao{
 	}
 	
 	public static GameCharacter getCharFromCharID(Connection cxn, int charID) throws SQLException {
-		return null;
-	}
+		String selectChar = """
+				SELECT characterID, playerID, firstName, lastName, clanID, currentJob, equippedWeapon
+					FROM `Character`
+					WHERE characterID = ?;""";
+					
+		try (PreparedStatement selectStmt = cxn.prepareStatement(selectChar)) {
+			selectStmt.setInt(1, charID);
+			
+			try(ResultSet results = selectStmt.executeQuery()) {
+				
+				if (results.next()) {
+					Player player = PlayerDao.getPlayerFromPlayerID(cxn, results.getInt("playerID"));
+					Clan clan = ClanDao.getClanFromClanID(cxn, results.getInt("clanID"));
+					Job currentJob = JobDao.getJobFromJobID(cxn, results.getInt("currentJob"));
+					Weapon equippedWeapon = WeaponDao.getWeaponFromWeaponID(cxn, results.getInt("equippedWeapon"));
+					
+					return new GameCharacter(charID,
+							player, results.getString("firstName"), 
+							results.getString("lastName"),
+							clan, currentJob, equippedWeapon);
+					
+				} else return null;
+			}
+ 		}
 		
+	}		
 }
+

@@ -7,6 +7,9 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 
+
+// Borrowed from CS5200 Databases - Prof. R. Cobbe
+
 /**
  * General utilities for data-access methods
  */

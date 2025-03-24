@@ -5,9 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GearDao {
 	private GearDao() {}
@@ -16,13 +13,59 @@ public class GearDao {
 	public static Gear create(Connection cxn, String itemName,
 			int itemLevel, Float itemPrice, int maxStackSize,
 			int requiredLevel,  GearSlot slot) throws SQLException {
-//		EquippableItemDao.create(cxn, null, 0, null, 0, null)  creates equippableItem & ItemPrototype obj simultaneously
 		
-		return null;
+		String insertGear = """
+				INSERT INTO Gear (gearID, itemName, itemLevel, itemPrice, itemMaxStackSize, requiredLevel, slotID)
+					VALUES (?, ?, ?, ?, ?, ?, ?);""";
+		
+		try(PreparedStatement insertStmt = cxn.prepareStatement(insertGear)) {
+			int gearID = EquippableItemDao.create(cxn, itemName, itemLevel, itemPrice, maxStackSize, requiredLevel);
+			
+			insertStmt.setInt(1, gearID);
+			insertStmt.setString(2, itemName);
+			insertStmt.setInt(3, itemLevel);
+			insertStmt.setFloat(4, itemPrice);
+			insertStmt.setInt(5, maxStackSize);
+			insertStmt.setInt(6, requiredLevel);
+			insertStmt.setInt(7, slot.getSlotID());
+			
+			insertStmt.executeUpdate();
+			
+			return new Gear(gearID, itemName, itemLevel, itemPrice, maxStackSize, requiredLevel, slot);
+		}
+		
 	}
 	
-	public static Gear getGearFromPrototypeID(Connection cxn, int prototypeID) throws SQLException {
-		return null;
+	public static Gear getGearFromGearID(Connection cxn, int gearID) throws SQLException {
+		String selectGear = """
+				SELECT gearID, itemName, itemLevel, itemPrice, itemMaxStackSize, requiredLevel, slotID
+					FROM Gear
+						INNER JOIN EquippableItem ON EquippableItem.equippableItemID = Gear.gearID
+						INNER JOIN ItemPrototype ON ItemPrototype.prototypeID = Gear.gearID
+					WHERE gearID = ?;
+				""";
+		
+		try (PreparedStatement selectStmt = cxn.prepareStatement(selectGear)) {
+			selectStmt.setInt(1, gearID);
+			
+			try(ResultSet results = selectStmt.executeQuery()) {
+				if (results.next()) {
+					GearSlot slot = GearSlotDao.getGearSlotFromSlotID(cxn, results.getInt("slotID"));
+					return new Gear(
+							gearID,
+							results.getString("itemName"),
+							results.getInt("itemLevel"),
+							results.getFloat("itemPrice"),
+							results.getInt("itemMaxStackSize"),
+							results.getInt("requiredLevel"),
+							slot);
+				} else return null;
+			}
+		}
+		
 	}
-
 }
+
+
+
+
