@@ -43,7 +43,7 @@ public class ConsumableDao {
 							results.getString("itemName"),
 							results.getInt("itemLevel"),
 							results.getFloat("itemPrice"),
-							results.getInt("maxStackSize"));
+							results.getInt("itemMaxStackSize"));
 				} else {
 					return null;
 				}
@@ -65,10 +65,17 @@ public class ConsumableDao {
 			deleteStmt.setInt(1, consumableID);
 			deleteStmt.executeUpdate();
 		}
+		
+		String deleteIP = "DELETE FROM ItemPrototype WHERE prototypeID = ?;";		// delete corresponding entry in IP
+		
+		try (PreparedStatement deleteStmt = cxn.prepareStatement(deleteIP)) {
+			deleteStmt.setInt(1, consumableID);
+			deleteStmt.executeUpdate();
+		}
 	}
 	
 	
-	public static List<Consumable> getConsumableByName(Connection cxn, String name) throws SQLException{
+	public static List<Consumable> getConsumablesByName(Connection cxn, String name) throws SQLException{
 		List<Consumable> consumables = new ArrayList<>();
 		
 		String selectConsumable = """
@@ -81,12 +88,12 @@ public class ConsumableDao {
 			selectStmt.setString(1, name);
 			
 			try(ResultSet results = selectStmt.executeQuery()) {
-				if (results.next()) {
+				while (results.next()) {
 					consumables.add(new Consumable(results.getInt("consumableID"),
 							name,
 							results.getInt("itemLevel"),
 							results.getFloat("itemPrice"),
-							results.getInt("maxStackSize")));
+							results.getInt("itemMaxStackSize")));
 				}
 			}
 		}

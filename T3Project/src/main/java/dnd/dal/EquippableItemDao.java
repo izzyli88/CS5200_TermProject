@@ -19,7 +19,8 @@ public class EquippableItemDao {
 		try(PreparedStatement insertStmt = cxn.prepareStatement(insertEquippable)) {
 			int itemID = ItemPrototypeDao.create(cxn, itemName, itemLevel, itemPrice, maxStackSize);	// create itemPrototype record in sql
 			
-			insertStmt.setInt(1, requiredLevel);
+			insertStmt.setInt(1, itemID);
+			insertStmt.setInt(2, requiredLevel);
 			insertStmt.executeUpdate();
 			
 			return itemID;

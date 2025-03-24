@@ -22,12 +22,10 @@ public class CharacterDao{
 			Job currentJob,
 			Weapon currWeapon) throws SQLException {
 		final String insertGameCharacter = """
-			      INSERT INTO Character (player, firstName, lastName, clan, currentJob, currWeapon )
+			      INSERT INTO `Character` (playerID, firstName, lastName, clanID, currentJob, equippedWeapon )
 		        VALUES (?, ?, ?, ?, ?, ?);""";
 		
 		try(PreparedStatement insertStmt = cxn.prepareStatement(insertGameCharacter, Statement.RETURN_GENERATED_KEYS)) {
-			insertStmt.setInt(0, 0);
-			
 			insertStmt.setInt(1, player.getPlayerID());
 			insertStmt.setString(2, firstName);
 			insertStmt.setString(3, lastName);

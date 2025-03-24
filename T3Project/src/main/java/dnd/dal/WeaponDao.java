@@ -18,20 +18,15 @@ public class WeaponDao {
 		
 		
 		String insertWeapon = """
-				INSERT INTO Weapon (weaponID, itemName, itemLevel, itemPrice, itemMaxStackSize, requiredLevel, jobID, attackDamage)
-					VALUES (?, ?, ?, ?, ?, ?, ?, ?);""";
+				INSERT INTO Weapon (weaponID, jobID, attackDamage)
+					VALUES (?, ?, ?);""";
 		
 		try(PreparedStatement insertStmt = cxn.prepareStatement(insertWeapon)) {
 			int weaponID = EquippableItemDao.create(cxn, itemName, itemLevel, itemPrice, maxStackSize, requiredLevel);
 			
 			insertStmt.setInt(1, weaponID);
-			insertStmt.setString(2, itemName);
-			insertStmt.setInt(3, itemLevel);
-			insertStmt.setFloat(4, itemPrice);
-			insertStmt.setInt(5, maxStackSize);
-			insertStmt.setInt(6, requiredLevel);
-			insertStmt.setInt(7, job.getJobID());
-			insertStmt.setInt(8, attackDmg);
+			insertStmt.setInt(2, job.getJobID());
+			insertStmt.setInt(3, attackDmg);
 			
 			insertStmt.executeUpdate();
 			
@@ -42,7 +37,7 @@ public class WeaponDao {
 	
 	public static Weapon getWeaponFromWeaponID(Connection cxn, int weaponID) throws SQLException{
 		String selectWeapon = """
-				SELECT gearID, itemName, itemLevel, itemPrice, itemMaxStackSize, requiredLevel, jobID, attackDamage
+				SELECT weaponID, itemName, itemLevel, itemPrice, itemMaxStackSize, requiredLevel, jobID, attackDamage
 					FROM Weapon
 						INNER JOIN EquippableItem ON EquippableItem.equippableItemID = Weapon.weaponID
 						INNER JOIN ItemPrototype ON ItemPrototype.prototypeID = Weapon.weaponID

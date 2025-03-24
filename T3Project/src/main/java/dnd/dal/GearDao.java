@@ -15,19 +15,14 @@ public class GearDao {
 			int requiredLevel,  GearSlot slot) throws SQLException {
 		
 		String insertGear = """
-				INSERT INTO Gear (gearID, itemName, itemLevel, itemPrice, itemMaxStackSize, requiredLevel, slotID)
-					VALUES (?, ?, ?, ?, ?, ?, ?);""";
+				INSERT INTO Gear (gearID, slotID)
+					VALUES (?, ?);""";
 		
 		try(PreparedStatement insertStmt = cxn.prepareStatement(insertGear)) {
 			int gearID = EquippableItemDao.create(cxn, itemName, itemLevel, itemPrice, maxStackSize, requiredLevel);
 			
 			insertStmt.setInt(1, gearID);
-			insertStmt.setString(2, itemName);
-			insertStmt.setInt(3, itemLevel);
-			insertStmt.setFloat(4, itemPrice);
-			insertStmt.setInt(5, maxStackSize);
-			insertStmt.setInt(6, requiredLevel);
-			insertStmt.setInt(7, slot.getSlotID());
+			insertStmt.setInt(2, slot.getSlotID());
 			
 			insertStmt.executeUpdate();
 			

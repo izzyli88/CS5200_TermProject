@@ -12,7 +12,7 @@ public class JobDao {
 	private JobDao() {}
 	
 	public static Job create(Connection cxn, String jobName) throws SQLException {
-		String insertJob = "INSERT INTO ItemPrototype (jobName) VALUES (?);";
+		String insertJob = "INSERT INTO Job (jobName) VALUES (?);";
 				
 		try(PreparedStatement insertStmt = cxn.prepareStatement(insertJob, Statement.RETURN_GENERATED_KEYS)) {
 			insertStmt.setString(1, jobName);
