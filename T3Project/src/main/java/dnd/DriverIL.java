@@ -1,16 +1,5 @@
 package dnd;
-import dnd.dal.CharacterDao;
-import dnd.dal.ClanDao;
-import dnd.dal.ConnectionManager;
-import dnd.dal.ConsumableDao;
-import dnd.dal.EquippableItemDao;
-import dnd.dal.GearDao;
-import dnd.dal.GearSlotDao;
-import dnd.dal.ItemPrototypeDao;
-import dnd.dal.JobDao;
-import dnd.dal.PlayerDao;
-import dnd.dal.RacesDao;
-import dnd.dal.WeaponDao;
+import dnd.dal.*;
 import dnd.model.*;
 
 import java.sql.Connection;
