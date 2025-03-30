@@ -10,6 +10,32 @@ public class Statistic {
 		this.statisticID = statisticID;
 		this.statisticName = statisticName;
 	}
+	
+	
+
+	public int getStatisticID() {
+		return statisticID;
+	}
+
+
+
+	public void setStatisticID(int statisticID) {
+		this.statisticID = statisticID;
+	}
+
+
+
+	public String getStatisticName() {
+		return statisticName;
+	}
+
+
+
+	public void setStatisticName(String statisticName) {
+		this.statisticName = statisticName;
+	}
+
+
 
 	@Override
 	public int hashCode() {
