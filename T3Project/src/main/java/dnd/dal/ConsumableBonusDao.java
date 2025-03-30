@@ -28,7 +28,28 @@ public class ConsumableBonusDao {
 	}
 	
 	public static ConsumableBonus getConsumableBonusFromStatANDConsumable(Connection cxn, Statistic stat, Consumable consumable) throws SQLException{
-		return null;
+		String selectCB = """
+				SELECT statisticID, consumableID, bonusPercentage, bonusCap
+					FROM ConsumableBonus
+					WHERE statisticID = ? AND consumableID = ?;
+				""";
+		
+		try(PreparedStatement selectStmt = cxn.prepareStatement(selectCB)) {
+			selectStmt.setInt(1, stat.getStatisticID());
+			selectStmt.setInt(2, consumable.getPrototypeID());
+			
+			try(ResultSet results = selectStmt.executeQuery()) {
+				if (results.next()) {
+					return new ConsumableBonus(
+							stat,
+							consumable,
+							results.getFloat("bonusPercentage"),
+							results.getFloat("bonusCap"));
+				} else {
+					return null;
+				}
+			}
+		}
 	}
 
 }
