@@ -53,12 +53,12 @@ public class DriverIL{
 			// Consumable Creation
 			Consumable bob = ConsumableDao.create(cxn, "Bag of Beans", 100, 10000.0f, 10);
 			Consumable gem = ConsumableDao.create(cxn, "Elemental Gem", 100, 10000.0f, 10);
-			ConsumableDao.create(cxn, "Bag of Beans", 500, 50000.0f, 50);		// duplicate names okay
+			Consumable bob2 = ConsumableDao.create(cxn, "Bag of Beans", 500, 50000.0f, 50);		// duplicate names okay
 			
 			
 			// Gear Creation
-			GearDao.create(cxn, "Valorous Mask", 15, 10000f, 10, 30, head);
-			GearDao.create(cxn, "Valorous Plate", 15, 10000f, 10, 30, body);
+			Gear mask = GearDao.create(cxn, "Valorous Mask", 15, 10000f, 10, 30, head);
+			Gear plate = GearDao.create(cxn, "Valorous Plate", 15, 10000f, 10, 30, body);
 			GearDao.create(cxn, "Valorous Greaves", 15, 10000f, 10, 30, feet);
 			
 			
@@ -71,6 +71,20 @@ public class DriverIL{
 			// Game Character Creation
 			GameCharacter megumi = CharacterDao.create(cxn, doge, "Megumi", "Fushiguro", mirk, rogue, dagger);
 			CharacterDao.create(cxn, doge, "Yuji", "Itadori", mirk, paladin, dagger);
+			
+			
+			// ConsumableBonus Creation
+			
+			// EquippableBonus Creation
+			
+			// EquippedGear Creation
+			EquippedGearDao.create(cxn, megumi, head, mask);
+			EquippedGearDao.create(cxn, megumi, body, plate);
+			
+			// GearJobRequirement Creation
+			GearJobRequirementDao.create(cxn, mask, rogue);
+			GearJobRequirementDao.create(cxn, plate, rogue);
+			
 
 
 			
@@ -131,6 +145,24 @@ public class DriverIL{
 			System.out.format("Reading Character: CharID: %d, PlayerID: %d, First Name: %s, Last Name: %s, ClanID: %d, CurrJob: %d, EquippedWeapon: %d\n",
 					mf.getCharacterID(), mf.getPlayer().getPlayerID(), mf.getFirstName(), mf.getLastName(), mf.getClan().getClanID(),
 					mf.getCurrentJob().getJobID(), mf.getCurrWeapon().getPrototypeID());
+			
+			
+			
+			// ConsumableBonus from consumableID, statID
+			
+			// EquippableBonus from equippableID, statID
+			
+			
+			// EquippedGear from charID, slotID
+			EquippedGear eg = EquippedGearDao.getEquippedGearFromCharacterGearSlot(cxn, megumi, head);
+			System.out.format("Reading EquippedGear: CharID: %d, slotID: %d, gearID: %d\n",
+					eg.getCharacter().getCharacterID(), eg.getGearSlot().getSlotID(), eg.getGear().getPrototypeID());
+			
+			
+			// GearJobRequirement from gearID, jobID
+			GearJobRequirement gjr = GearJobRequirementDao.getGearJobRequirementByGearANDJob(cxn, mask, rogue);
+			System.out.format("Reading GearJobRequirement: gearID: %d, jobID: %d\n", gjr.getGear().getPrototypeID(), gjr.getJob().getJobID());
+			
 			
 			System.out.println();
 			
