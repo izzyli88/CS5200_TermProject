@@ -3,7 +3,7 @@ package dnd.model;
 import java.util.Objects;
 
 public class InventorySlot {
-	private Character character;
+	private GameCharacter character;
 	private int slotNumber;
 	private ItemPrototype prototypeID;
 	private int stackSize;
@@ -11,7 +11,7 @@ public class InventorySlot {
 	private static final int DEFAULT_STACK_SIZE = 1;
 
 	
-	public InventorySlot(Character character, int slotNumber, ItemPrototype prototypeID,
+	public InventorySlot(GameCharacter character, int slotNumber, ItemPrototype prototypeID,
 			Integer stackSize) {
 		this.character = character;
 		this.slotNumber = slotNumber;
@@ -20,12 +20,12 @@ public class InventorySlot {
 	}
 
 
-	public Character getCharacter() {
+	public GameCharacter getCharacter() {
 		return character;
 	}
 
 
-	public void setCharacter(Character character) {
+	public void setCharacter(GameCharacter character) {
 		this.character = character;
 	}
 

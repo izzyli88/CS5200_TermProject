@@ -75,7 +75,12 @@ public abstract class ItemPrototype{
 	}
 
 	
+	
 	// equals/hash/toString
+
+	public static float getDefaultItemPrice() {
+		return DEFAULT_ITEM_PRICE;
+	}
 
 	@Override
 	public int hashCode() {

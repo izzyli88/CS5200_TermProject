@@ -18,7 +18,10 @@ public class ItemPrototypeDao {
 		try(PreparedStatement insertStmt = cxn.prepareStatement(insertItemPrototype, Statement.RETURN_GENERATED_KEYS)) {
 			insertStmt.setString(1, itemName);
 			insertStmt.setInt(2, itemLevel);
-			insertStmt.setFloat(3, itemPrice);
+			
+			// for default val in sql
+			insertStmt.setFloat(3, itemPrice != null ? itemPrice : ItemPrototype.getDefaultItemPrice());
+			
 			insertStmt.setInt(4, itemMaxStackSize);
 			
 			insertStmt.executeUpdate();

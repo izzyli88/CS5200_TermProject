@@ -81,11 +81,13 @@ public class CharacterJob {
 	public static int getDefaultExp() {
 		return DEFAULT_EXP;
 	}
-
+	
 
 	public static boolean isDefaultUnlocked() {
 		return DEFAULT_UNLOCKED;
 	}
+	
+	
 
 
 	@Override

@@ -20,7 +20,8 @@ public class EquippableItemDao {
 			int itemID = ItemPrototypeDao.create(cxn, itemName, itemLevel, itemPrice, maxStackSize);	// create itemPrototype record in sql
 			
 			insertStmt.setInt(1, itemID);
-			insertStmt.setInt(2, requiredLevel);
+			
+			insertStmt.setInt(2, requiredLevel != null ? requiredLevel : EquippableItem.getDefaultRequiredLevel());
 			insertStmt.executeUpdate();
 			
 			return itemID;

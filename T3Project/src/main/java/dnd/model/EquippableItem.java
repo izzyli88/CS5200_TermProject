@@ -23,6 +23,12 @@ public abstract class EquippableItem extends ItemPrototype {
 	public void setRequiredLevel(int requiredLevel) {
 		this.requiredLevel = requiredLevel;
 	}
+	
+	
+
+	public static int getDefaultRequiredLevel() {
+		return DEFAULT_REQUIRED_LEVEL;
+	}
 
 	@Override
 	public int hashCode() {

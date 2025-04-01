@@ -59,6 +59,17 @@ public class CharacterCurrency {
 		this.amountEarnedThisWeek = amountEarnedThisWeek;
 	}
 
+	
+
+	public static int getDefaultAmountHeld() {
+		return DEFAULT_AMOUNT_HELD;
+	}
+
+
+	public static int getDefaultAmountEarned() {
+		return DEFAULT_AMOUNT_EARNED;
+	}
+
 
 	@Override
 	public int hashCode() {
