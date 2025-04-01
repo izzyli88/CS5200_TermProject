@@ -6,23 +6,51 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
-
 
 public class InventorySlotDao {
-	private InventorySlotDao() {}
-	
-	
-	public static InventorySlot create(Connection cxn, GameCharacter character, int slotNumber, ItemPrototypeDao prototype, int stackSize) throws SQLException{
-		return null;
-	}
-	
-	
-	public static InventorySlot getInventorySlotByCharacterSlotNumber(Connection cxn, GameCharacter character, int slotNumber) throws SQLException{
-		return null;
-	}
 
+    private InventorySlotDao() {}
+
+    /**
+     * Inserts a new InventorySlot record into the database.
+     */
+    public static InventorySlot create(Connection cxn, GameCharacter character, int slotNumber, ItemPrototype prototype, int stackSize) throws SQLException {
+        String sql = "INSERT INTO InventorySlot (characterID, slotNumber, itemID, prototypeID, stackSize) VALUES (?, ?, ?, ?, ?)";
+
+        try (PreparedStatement stmt = cxn.prepareStatement(sql)) {
+            stmt.setInt(1, character.getCharacterID());
+            stmt.setInt(2, slotNumber);
+            stmt.setInt(3, prototype.getPrototypeID());  // itemID
+            stmt.setInt(4, prototype.getPrototypeID());  // prototypeID (same as itemID)
+            stmt.setInt(5, stackSize);
+
+            stmt.executeUpdate();
+
+            return new InventorySlot(character, slotNumber, prototype, stackSize);
+        }
+    }
+
+    /**
+     * Retrieves an InventorySlot by character and slot number.
+     */
+    public static InventorySlot getInventorySlotByCharacterSlotNumber(Connection cxn, GameCharacter character, int slotNumber) throws SQLException {
+        String sql = "SELECT prototypeID, stackSize FROM InventorySlot WHERE characterID = ? AND slotNumber = ?";
+
+        try (PreparedStatement stmt = cxn.prepareStatement(sql)) {
+            stmt.setInt(1, character.getCharacterID());
+            stmt.setInt(2, slotNumber);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int prototypeID = rs.getInt("prototypeID");
+                    int stackSize = rs.getInt("stackSize");
+
+                    ItemPrototype item = new ItemPrototype(prototypeID);  // minimal constructor
+                    return new InventorySlot(character, slotNumber, item, stackSize);
+                } else {
+                    return null;
+                }
+            }
+        }
+    }
 }
