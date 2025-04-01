@@ -47,35 +47,4 @@ public class CharacterStatsDao {
             }
         }
     }
-
-    /**
-     * Update the value of a specific CharacterStat.
-     */
-    public static CharacterStats updateValue(Connection cxn, GameCharacter character, Statistic stat, int newValue) throws SQLException {
-        String sql = "UPDATE CharacterStats SET value = ? WHERE characterID = ? AND statisticID = ?";
-
-        try (PreparedStatement stmt = cxn.prepareStatement(sql)) {
-            stmt.setInt(1, newValue);
-            stmt.setInt(2, character.getCharacterID());
-            stmt.setInt(3, stat.getStatisticID());
-
-            int updated = stmt.executeUpdate();
-            if (updated == 0) return null;
-
-            return new CharacterStats(character, stat, newValue);
-        }
-    }
-
-    /**
-     * Deletes a CharacterStats entry from the database.
-     */
-    public static void delete(Connection cxn, GameCharacter character, Statistic stat) throws SQLException {
-        String sql = "DELETE FROM CharacterStats WHERE characterID = ? AND statisticID = ?";
-
-        try (PreparedStatement stmt = cxn.prepareStatement(sql)) {
-            stmt.setInt(1, character.getCharacterID());
-            stmt.setInt(2, stat.getStatisticID());
-            stmt.executeUpdate();
-        }
-    }
 }
