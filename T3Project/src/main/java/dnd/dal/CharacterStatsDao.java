@@ -47,5 +47,9 @@ public class CharacterStatsDao {
             }
         }
     }
+<<<<<<< HEAD
 
    
+=======
+}
+>>>>>>> izzy
