@@ -39,7 +39,7 @@ public class CharacterJobDao {
 
         try (PreparedStatement stmt = cxn.prepareStatement(sql)) {
             stmt.setInt(1, character.getCharacterID());
-            stmt.setString(2, job.getJobName());
+            stmt.setInt(2, job.getJobID());
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
