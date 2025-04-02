@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+// Code borrowed from Prof. Richard Cobbe, CS5200
+
 /**
  * Use ConnectionManager to connect to your database instance.
  *
