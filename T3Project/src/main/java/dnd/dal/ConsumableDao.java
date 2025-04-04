@@ -59,13 +59,6 @@ public class ConsumableDao {
 		
 		int consumableID = consumable.getPrototypeID();
 		
-		String deleteConsumable = "DELETE FROM Consumable WHERE consumableID = ?;";
-		
-		try (PreparedStatement deleteStmt = cxn.prepareStatement(deleteConsumable)) {	// should cascade deletion up to ItemPrototype table
-			deleteStmt.setInt(1, consumableID);
-			deleteStmt.executeUpdate();
-		}
-		
 		String deletePrototype = "DELETE FROM ItemPrototype WHERE prototypeID = ?;";
 		
 		try (PreparedStatement deleteStmt = cxn.prepareStatement(deletePrototype)) {	// should cascade deletion up to ItemPrototype table
