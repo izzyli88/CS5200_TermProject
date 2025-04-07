@@ -1,4 +1,3 @@
- 
 package dnd;
 
 import dnd.dal.*;
@@ -20,232 +19,100 @@ public class Driver {
             System.exit(-1);
         }
     }
-
+    
     private static void insertRecords() throws SQLException {
-        try (Connection cxn = ConnectionManager.getConnection()) {
+    	try(Connection cxn = ConnectionManager.getConnection()) {
+    		// PLAYERS
+    		
+    		Player aa = PlayerDao.create(cxn, "Apple Aardvark", "aa@email.com");
+    		Player bb = PlayerDao.create(cxn, "Banana Bat", "bb@email.com");
+    		PlayerDao.create(cxn, "Calamari Cat", "cc@email.com");
+    		PlayerDao.create(cxn, "Daikon Dog", "dd@email.com");
+    		PlayerDao.create(cxn, "Edamame Echidna", "ee@email.com");
+    		PlayerDao.create(cxn, "Fig Frog", "ff@email.com");
+    		PlayerDao.create(cxn, "Guacamole Giraffe", "gg@email.com");
+    		PlayerDao.create(cxn, "Habanero Hamster", "hh@email.com");
+    		PlayerDao.create(cxn, "Icecream Iguana", "ii@email.com");
+    		PlayerDao.create(cxn, "Jackfruit Jaguar", "jj@email.com");
+    		
+    		// Race
+    		Races elf = RacesDao.create(cxn, "Elf");
+	        Races human = RacesDao.create(cxn, "Human");
+	        RacesDao.create(cxn, "Dwarf");
+	        RacesDao.create(cxn, "Dragonborn");
+	        RacesDao.create(cxn, "Gnome");
+	        RacesDao.create(cxn, "Changeling");
+	        RacesDao.create(cxn, "Halfling");
+	        RacesDao.create(cxn, "Orc");
+	        RacesDao.create(cxn, "Goblin");
+	        RacesDao.create(cxn, "Dhampir");
+	        
+	        // Clan
+	        Clan mirk = ClanDao.create(cxn, elf, "Mirkwood");
+	        Clan sea = ClanDao.create(cxn, human, "Seattle Clan");
+	        ClanDao.create(cxn, human, "Oregon Clan");
+	        ClanDao.create(cxn, human, "Boston Clan");
+	        ClanDao.create(cxn, human, "NYC Clan");
+	        ClanDao.create(cxn, human, "LA Clan");
+	        ClanDao.create(cxn, human, "San Diego Clan");
+	        ClanDao.create(cxn, human, "SF Clan");
+	        ClanDao.create(cxn, human, "Cape Cod Clan");
+	        ClanDao.create(cxn, human, "Denver Clan");
+    		
+    		// JOBS
+    		Job rogue = JobDao.create(cxn, "Rogue");
+    		Job paladin = JobDao.create(cxn, "Paladin");
+    		Job ranger = JobDao.create(cxn, "Ranger");
+    		Job necromancer = JobDao.create(cxn, "Necromancer");
+    		Job sorcerer = JobDao.create(cxn, "Sorcerer");
+    		JobDao.create(cxn, "Druid");
+    		JobDao.create(cxn, "Fighter");
+    		JobDao.create(cxn, "Cleric");
+    		JobDao.create(cxn, "Monk");
+    		JobDao.create(cxn, "Barbarian");
+    		
+    		// WEAPONS
+    		Weapon dagger = WeaponDao.create(cxn, "Dagger", 20, 2000f, 20, 20, rogue, 20);
+    		Weapon glaive = WeaponDao.create(cxn, "Glaive", 50, 5000f, 50, 50, paladin, 50);
+    		Weapon bow = WeaponDao.create(cxn, "Longbow", 40, 4000f, 40, 40, ranger, 40);
+    		Weapon warbow = WeaponDao.create(cxn, "Warbow", 30, 3000f, 30, 30, ranger, 30);
+    		WeaponDao.create(cxn, "Catalyst", 60, 6000f, 60, 60, necromancer, 60);
+    		Weapon staff = WeaponDao.create(cxn, "Staff", 70, 7000f, 70, 70, sorcerer, 70);
+    		Weapon javelin = WeaponDao.create(cxn, "Javelin", 80, 8000f, 80, 80, rogue, 80);
+    		Weapon longsword = WeaponDao.create(cxn, "Longsword", 90, 9000f, 90, 90, paladin, 90);
+    		WeaponDao.create(cxn, "Shield", 110, 11000f, 110, 110, paladin, 110);
+    		Weapon gauntlets = WeaponDao.create(cxn, "Gauntlets", 120, 12000f, 120, 120, paladin, 120);
+    		
+    		// CHARACTERS
+    		GameCharacter gojo = CharacterDao.create(cxn, aa, "Gojo", "Satoru", sea, sorcerer, staff);
+    		CharacterDao.create(cxn, aa, "Yuji", "Itadori", sea, paladin, gauntlets);
+    		GameCharacter megumi = CharacterDao.create(cxn, aa, "Megumi", "Fushiguro", mirk, rogue, dagger);
+    		CharacterDao.create(cxn, aa, "Nobara", "Kugisaki", sea, sorcerer, staff);
+    		CharacterDao.create(cxn, aa, "Kento", "Nanami", mirk, paladin, longsword);
+    		GameCharacter toji = CharacterDao.create(cxn, bb, "Toji", "Fushiguro", sea, rogue, javelin);
+    		GameCharacter meimei = CharacterDao.create(cxn, bb, "Mei", "Mei", sea, paladin, longsword);
+    		GameCharacter nori = CharacterDao.create(cxn, bb, "Noritoshi", "Kamo", mirk, ranger, bow);
+    		CharacterDao.create(cxn, bb, "Choso", "Kamo", sea, sorcerer, staff);
+    		CharacterDao.create(cxn, bb, "Miwa", "Kasumi", sea, paladin, longsword);
+    		
+    		
+    		// INVENTORYSLOT
+    		InventorySlotDao.create(cxn, megumi, 1, dagger, 3);
+    		InventorySlotDao.create(cxn, megumi, 2, javelin, 2);
+    		InventorySlotDao.create(cxn, toji, 1, dagger, 4);
+    		InventorySlotDao.create(cxn, toji, 2, javelin, 5);
+    		InventorySlotDao.create(cxn, meimei, 1, longsword, 10);
+    		InventorySlotDao.create(cxn, meimei, 2, gauntlets, 10);
+    		InventorySlotDao.create(cxn, meimei, 3, glaive, 10);
+    		InventorySlotDao.create(cxn, gojo, 1, staff, 10);
+    		InventorySlotDao.create(cxn, nori, 1, bow, 3);
+    		InventorySlotDao.create(cxn, nori, 2, warbow, 3);
+    		
+    	
 
-            // === RECORD CREATION TESTS ===
-        	
-        	// NOTE: ITEMPROTOTYPE & EQUIPPABLEITEM Creations Tested in Gear/Weapon/Consumable Creations
-
-            // 1. Players
-            Player doge = PlayerDao.create(cxn, "Doge Dog", "doge@email.com");
-            PlayerDao.create(cxn, "Cat cat", "cat@email.com");
-
-            // 2. Races
-            Races elf = RacesDao.create(cxn, "Elf");
-            RacesDao.create(cxn, "Dwarf");
-            RacesDao.create(cxn, "Human");
-
-            // 3. Clan
-            Clan mirk = ClanDao.create(cxn, elf, "Mirkwood");
-
-            // 4. Gear Slots
-            GearSlot head = GearSlotDao.create(cxn, "Head");
-            GearSlot body = GearSlotDao.create(cxn, "Body");
-            GearSlot feet = GearSlotDao.create(cxn, "Feet");
-
-            // 5. Jobs
-            Job rogue = JobDao.create(cxn, "Rogue");
-            Job paladin = JobDao.create(cxn, "Paladin");
-            Job ranger = JobDao.create(cxn, "Ranger");
-
-            // 6. Consumables
-            Consumable bob = ConsumableDao.create(cxn, "Bag of Beans", 100, 10000.0f, 10);
-            Consumable gem = ConsumableDao.create(cxn, "Elemental Gem", 100, 10000.0f, 10);
-            ConsumableDao.create(cxn, "Bag of Beans", 500, 50000.0f, 50); // duplicate name allowed
-
-            // 7. Gear (tests ItemPrototype & EquippableItem)
-            Gear mask = GearDao.create(cxn, "Valorous Mask", 15, 10000f, 10, 30, head);
-            Gear plate = GearDao.create(cxn, "Valorous Plate", 15, 10000f, 10, 30, body);
-            GearDao.create(cxn, "Valorous Greaves", 15, 10000f, 10, 30, feet);
-
-            // 8. Weapons
-            Weapon dagger = WeaponDao.create(cxn, "Dagger", 20, 2000f, 20, 20, rogue, 20);
-            WeaponDao.create(cxn, "Glaive", 50, 5000f, 50, 50, paladin, 50);
-            WeaponDao.create(cxn, "Longbow", 30, 3000f, 30, 30, ranger, 30);
-
-            // 9. Game Characters
-            GameCharacter megumi = CharacterDao.create(cxn, doge, "Megumi", "Fushiguro", mirk, rogue, dagger);
-            CharacterDao.create(cxn, doge, "Yuji", "Itadori", mirk, paladin, dagger);
-
-            // 10. Statistics
-            Statistic str = StatisticDao.create(cxn, "Strength");
-            
-            // 11. CharacterStatistics
-            CharacterStatsDao.create(cxn, megumi, str, 50); // Megumi's base strength
-
-            // 12. Currency
-            Currency yen = CurrencyDao.create(cxn, "Yen", null, null);
-            Currency usd = CurrencyDao.create(cxn, "Dollar", 1000000000, 200000);
-            
-            // 13. Character Currency
-            CharacterCurrencyDao.create(cxn, megumi, yen, 100, 25); // Starting gil
-            CharacterCurrencyDao.create(cxn, megumi, usd, null, null);		// test out default values
-            
-            // 14. Character Job
-            CharacterJobDao.create(cxn, megumi, rogue, 10, 3000, true); // Rogue unlocked
-
-            // 15. Inventory Slots
-            InventorySlotDao.create(cxn, megumi, 1, dagger, 5); // 5x itemID: 7 (dagger) in slot 1
-
-            // 16. Equipped Gear
-            EquippedGearDao.create(cxn, megumi, head, mask);
-            EquippedGearDao.create(cxn, megumi, body, plate);
-
-            // 17. Gear → Job requirements
-            GearJobRequirementDao.create(cxn, mask, rogue);
-            GearJobRequirementDao.create(cxn, plate, rogue);
-
-            // 18. EquippableItem Bonus
-            EquippableBonusDao.create(cxn, str, mask, 5); // +5 STR on mask
-            
-            // 19. Consumable Bonus
-            ConsumableBonusDao.create(cxn, str, bob, 10.0f, 100.0f); // +10% STR on bob, max 100
-
-            // === RECORD RETRIEVAL TESTS ===
-            System.out.println("=== RECORD RETRIEVAL TESTS ===");
-
-            // 1. Player
-            Player p = PlayerDao.getPlayerFromPlayerID(cxn, 1);
-            System.out.format("Reading Player: PlayerID: %d, Full Name: %s, Email: %s\n", p.getPlayerID(), p.getFullName(), p.getEmail());
-            
-            // 2. Races
-            Races race = RacesDao.getRaceFromRaceID(cxn, 1);
-            System.out.format("Reading Race: RaceID: %d, Race Name: %s\n", race.getRaceID(), race.getRaceName());
-            
-            // 3. Clan
-            Clan clan = ClanDao.getClanFromClanID(cxn, 1);
-            System.out.format("Reading Clan: ClanID: %d, RaceID: %d, Clan Name: %s\n", clan.getClanID(), clan.getRace().getRaceID(), clan.getClanName());
-            
-            // 4. GearSlot
-            GearSlot slot = GearSlotDao.getGearSlotFromSlotID(cxn, 1);
-            System.out.format("Reading GearSlot: SlotID: %d, Slot Name: %s\n", slot.getSlotID(), slot.getSlotName());
-            
-            // 5. Job
-            Job job = JobDao.getJobFromJobID(cxn, 1);
-            System.out.format("Reading Job: jobID: %d, Job Name: %s\n", job.getJobID(), job.getJobName());
-            
-            // 6. Consumable
-            Consumable consumable = ConsumableDao.getConsumableByPrototypeID(cxn, 1);
-            System.out.format("Reading Consumable: Consumable ID: %d, Name: %s, Level: %d, Price: %f, Max Stack Size: %d\n", consumable.getPrototypeID(), consumable.getItemName(),
-					consumable.getItemLevel(), consumable.getItemPrice(), consumable.getItemMaxStackSize());
-            
-            // 7. Gear
-            Gear gear = GearDao.getGearFromGearID(cxn, 4);
-            System.out.format("Reading Gear: Gear ID: %d, Name: %s, Level: %d, Price: %f, Max Stack Size: %d, RequiredLevel: %d, Slot: %d\n", gear.getPrototypeID(), gear.getItemName(),
-					gear.getItemLevel(), gear.getItemPrice(), gear.getItemMaxStackSize(), gear.getRequiredLevel(), gear.getSlotID().getSlotID());
-			
-            // 8. Weapon
-            Weapon weapon = WeaponDao.getWeaponFromWeaponID(cxn, 7);
-            System.out.format("Reading Weapon: Weapon ID: %d, Name: %s, Level: %d, Price: %f, Max Stack Size: %d, RequiredLevel: %d, Job: %d, Attack Damage: %d\n",
-					weapon.getPrototypeID(), weapon.getItemName(),
-					weapon.getItemLevel(), weapon.getItemPrice(), weapon.getItemMaxStackSize(), weapon.getRequiredLevel(), weapon.getJob().getJobID(), weapon.getAttackDamage());
-			
-            // 9. ItemPrototype
-            ItemPrototype ip = ItemPrototypeDao.getItemFromPrototypeID(cxn, 7);
-            System.out.format("Reading Item Prototype: Prototype ID: %d, Name: %s, Level: %d, Price: %f, Max Stack Size: %d\n", ip.getPrototypeID(), ip.getItemName(),
-					ip.getItemLevel(), ip.getItemPrice(), ip.getItemMaxStackSize());
-            
-            // 10. EquippableItem 
-            EquippableItem ei = EquippableItemDao.getEquippableItemFromProtoypeID(cxn, 7);
-            System.out.format("Reading Equippable Item: Equippable ID: %d, Name: %s, Level: %d, Price: %f, Max Stack Size: %d, RequiredLevel: %d\n", ei.getPrototypeID(), ei.getItemName(),
-					ei.getItemLevel(), ei.getItemPrice(), ei.getItemMaxStackSize(), ei.getRequiredLevel());
-			
-            // 11. Game Char
-            GameCharacter gc = CharacterDao.getCharFromCharID(cxn, 1);
-            System.out.format("Reading Character: CharID: %d, PlayerID: %d, First Name: %s, Last Name: %s, ClanID: %d, CurrJob: %d, EquippedWeapon: %d\n",
-					gc.getCharacterID(), gc.getPlayer().getPlayerID(), gc.getFirstName(), gc.getLastName(), gc.getClan().getClanID(),
-					gc.getCurrentJob().getJobID(), gc.getCurrWeapon().getPrototypeID());
-			
-
-            // 12. EquippedGear
-            EquippedGear eg = EquippedGearDao.getEquippedGearFromCharacterGearSlot(cxn, megumi, head);
-            System.out.format("Reading EquippedGear: CharID: %d, slotID: %d, gearID: %d\n",
-					eg.getCharacter().getCharacterID(), eg.getGearSlot().getSlotID(), eg.getGear().getPrototypeID());
-            
-            // 13. GearJobRequirement
-            GearJobRequirement gjr = GearJobRequirementDao.getGearJobRequirementByGearANDJob(cxn, mask, rogue);
-            System.out.format("Reading GearJobRequirement: gearID: %d, jobID: %d\n", gjr.getGear().getPrototypeID(), gjr.getJob().getJobID());
-            
-            // 14. Currency
-            Currency currency = CurrencyDao.getCurrencyFromCurrencyID(cxn, 1);
-            System.out.format("Reading Currency: CurrencyID: %d, Currency Name: %s, Cap: %d, Weekly Cap: %d\n", currency.getCurrencyID(),
-            		currency.getCurrencyName(), currency.getCap(), currency.getWeeklyCap());
-            
-            // 15. CharCurrency
-            CharacterCurrency currencyRecord = CharacterCurrencyDao.getByCharacterAndCurrency(cxn, megumi, yen);
-            System.out.format("Reading CharacterCurrency: CharacterID: %d, CurrencyID: %d, Held: %d, Earned: %d\n",
-                currencyRecord.getCharacter().getCharacterID(),
-                currencyRecord.getCurrency().getCurrencyID(),
-                currencyRecord.getAmountHeld(),
-                currencyRecord.getAmountEarnedThisWeek());
-            
-            // 16. CharJob
-            CharacterJob cj = CharacterJobDao.getCharJobFromCharIDJobID(cxn, megumi, rogue);
-            System.out.format("Reading CharacterJob: CharID: %d, JobID: %d, Level: %d, XP: %d, Unlocked: %b\n",
-                cj.getCharacter().getCharacterID(),
-                cj.getJob().getJobID(),
-                cj.getLevel(),
-                cj.getExperiencePoints(),
-                cj.isUnlocked());
-            
-            // 17. Statistics
-            Statistic stat = StatisticDao.getStatisticFromStatID(cxn, 1);		// Strength
-            System.out.format("Reading Statistic: StatID: %d, Stat Name: %s \n", stat.getStatisticID(), stat.getStatisticName());
-            
-            // 18. CharStatistics
-            CharacterStats statRecord = CharacterStatsDao.getCharStat(cxn, megumi, str);
-            System.out.format("Reading CharacterStats: CharID: %d, StatID: %d, Value: %d\n",
-                statRecord.getCharacter().getCharacterID(),
-                statRecord.getStatistic().getStatisticID(),
-                statRecord.getValue());
-            
-            // 19. InventorySlot
-            InventorySlot inv = InventorySlotDao.getInventorySlotByCharacterSlotNumber(cxn, megumi, 1);
-            System.out.format("Reading InventorySlot: CharID: %d, Slot #: %d, PrototypeID: %d, StackSize: %d\n",
-                inv.getCharacter().getCharacterID(),
-                inv.getSlotNumber(),
-                inv.getPrototypeID().getPrototypeID(),
-                inv.getStackSize());
-            
-            // 20. ConsumableBonus
-            ConsumableBonus cb = ConsumableBonusDao.getConsumableBonusFromStatANDConsumable(cxn, str, bob);		// id: 1
-            System.out.format("Reading CBonus: StatID: %d, consumableID: %d, Bonus Percentage: %f, Bonus Cap: %f\n", 
-            		cb.getStatistic().getStatisticID(), cb.getConsumable().getPrototypeID(), cb.getBonusPercentage(), cb.getBonusCap());
-            
-            
-            // 21. EquippableItemBonus
-            EquippableBonus eb = EquippableBonusDao.getEquippableBonusFromStatANDPrototypeID(cxn, str, mask);
-            System.out.format("Reading Ebonus: StatID: %d, EquippableID: %d, Bonus Value: %d\n", 
-            		eb.getStatistic().getStatisticID(), eb.getEquippableItem().getPrototypeID(), eb.getBonusValue());
-
-            // === EXTRA 3 METHODS: CONSUMABLE TESTS ===
-            System.out.println();
-            System.out.println("=== CONSUMABLE: UPDATE/NAME LIST/DELETE ===");
-
-            // 1. Update Name
-            ConsumableDao.updateName(cxn, gem, "Elixir of Life");		// itemID == 2
-            System.out.println(ItemPrototypeDao.getItemFromPrototypeID(cxn, 2).getItemName());
-            
-            // 2. List compilation by Name
-            List<Consumable> beans = ConsumableDao.getConsumablesByName(cxn, "Bag of Beans");
-            for (Consumable con : beans) {
-                System.out.println("Found matching consumable: " + con.getItemName());
-            }
-
-            // 3. Deletion
-            ConsumableDao.delete(cxn, bob);		// bob's id: 1
-            Consumable tryBob = ConsumableDao.getConsumableByPrototypeID(cxn, 1);
-            if (tryBob == null) {
-                System.out.println("Deletion successful.");
-            } else {
-                System.out.println("Deletion failed.");
-            }
-            
-        }
-    }
-
+    	}
+    } 
+    
     private static void resetSchema() throws SQLException {
         try (Connection cxn = ConnectionManager.getSchemalessConnection()) {
             cxn.createStatement().executeUpdate("DROP SCHEMA IF EXISTS CS5200Project;");

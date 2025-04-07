@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WeaponDao {
 	private WeaponDao() {}
@@ -62,7 +64,35 @@ public class WeaponDao {
 	}
 	
 	
-	
-	
-
+	public static List<Weapon> getWeaponsByCharID(Connection cxn, int charID) throws SQLException{
+		List<Weapon> weapons = new ArrayList<>();
+		String selectWeapons = """
+				SELECT weaponID, itemName, itemLevel, itemPrice, itemMaxStackSize, requiredLevel, jobID, attackDamage
+				FROM Weapon INNER JOIN InventorySlot ON Weapon.weaponID = InventorySlot.prototypeID
+				INNER JOIN EquippableItem ON EquippableItem.equippableItemID = Weapon.weaponID
+				INNER JOIN ItemPrototype ON ItemPrototype.prototypeID = Weapon.weaponID
+				WHERE characterID = ?;
+				""";
+		
+		try(PreparedStatement selectStmt = cxn.prepareStatement(selectWeapons)) {
+			selectStmt.setInt(1, charID);
+			
+			try(ResultSet results = selectStmt.executeQuery()) {
+				while (results.next()) {
+					Job job = JobDao.getJobFromJobID(cxn, results.getInt("jobID"));
+					weapons.add(new Weapon(
+							results.getInt("weaponID"),
+							results.getString("itemName"),
+							results.getInt("itemLevel"),
+							results.getFloat("itemPrice"),
+							results.getInt("itemMaxStackSize"),
+							results.getInt("requiredLevel"),
+							job,
+							results.getInt("attackDamage")));
+				}
+				return weapons;
+			
+			}
+		}
+	}
 }

@@ -62,6 +62,45 @@ CREATE TABLE Job (
 );
 
 -- ===========================
+-- Inventory & Item Hierarchy
+-- ===========================
+CREATE TABLE ItemPrototype (
+    prototypeID INT AUTO_INCREMENT PRIMARY KEY,
+    itemName VARCHAR(100) NOT NULL,
+    itemLevel INT NOT NULL,
+    itemPrice DECIMAL(10,2) DEFAULT 0,
+    itemMaxStackSize INT NOT NULL
+);
+
+
+CREATE TABLE Consumable (
+    consumableID INT PRIMARY KEY,
+    CONSTRAINT fk_consumable_consumableID FOREIGN KEY (consumableID) REFERENCES ItemPrototype(prototypeID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE EquippableItem (
+    equippableItemID INT PRIMARY KEY,
+    requiredLevel INT DEFAULT 1,
+    CONSTRAINT fk_Equippable_equippableID FOREIGN KEY (equippableItemID) REFERENCES ItemPrototype(prototypeID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Gear (
+    gearID INT PRIMARY KEY,
+    slotID INT NOT NULL,
+    CONSTRAINT fk_Gear_gearID FOREIGN KEY (gearID) REFERENCES EquippableItem(equippableItemID) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_Gear_slotID FOREIGN KEY (slotID) REFERENCES gearSlot(slotID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Weapon (
+    weaponID INT PRIMARY KEY,
+    jobID INT NOT NULL,
+    attackDamage INT NOT NULL,
+    CONSTRAINT fk_weapon_weaponID FOREIGN KEY (weaponID) REFERENCES EquippableItem(equippableItemID) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_weapon_jobID FOREIGN KEY (jobID) REFERENCES Job(jobID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+-- ===========================
 -- Character Table 
 -- ===========================
 CREATE TABLE `Character` (
@@ -75,7 +114,37 @@ CREATE TABLE `Character` (
     CONSTRAINT unique_CharacterName UNIQUE (firstName, lastName),
     CONSTRAINT fk_Character_playerID FOREIGN KEY (playerID) REFERENCES Player(playerID) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_Character_clanID FOREIGN KEY (clanID) REFERENCES Clan(clanID) ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT fk_Character_currJob FOREIGN KEY (currentJob) REFERENCES Job(jobID) ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT fk_Character_currJob FOREIGN KEY (currentJob) REFERENCES Job(jobID) ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT fk_Character_currWeapon FOREIGN KEY (equippedWeapon) REFERENCES Weapon(weaponID) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+-- ===========================
+-- Equipped Gear Table
+-- ===========================
+CREATE TABLE EquippedGear (
+    characterID INT NOT NULL,
+    slotID INT NOT NULL,
+    gearID INT NULL,
+    CONSTRAINT pk_equippedGear PRIMARY KEY (characterID, slotID),
+    CONSTRAINT fk_EquippedGear_charID FOREIGN KEY (characterID) REFERENCES `Character`(characterID) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_EquippedGear_slotID FOREIGN KEY (slotID) REFERENCES gearSlot(slotID) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_EquippedGear_gearID FOREIGN KEY (gearID) REFERENCES Gear(gearID) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT unique_charID_slotID UNIQUE (characterID, slotID)
+);
+
+-- ===========================
+-- INVENTORY SLOT
+-- ===========================
+
+CREATE TABLE InventorySlot (
+    characterID INT NOT NULL,
+    slotNumber INT NOT NULL,
+    prototypeID INT NOT NULL,
+    stackSize INT NOT NULL,
+    PRIMARY KEY (characterID, slotNumber),
+    CONSTRAINT fk_Inventory_charID FOREIGN KEY (characterID) REFERENCES `Character`(characterID) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_Inventory_prototypeID FOREIGN KEY (prototypeID) REFERENCES ItemPrototype(prototypeID) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT unique_inventory_charID_slotNum UNIQUE (slotNumber, characterID)
 );
 
 -- ===========================
@@ -119,65 +188,6 @@ CREATE TABLE CharacterStats (
     CONSTRAINT fk_CharStats_statID FOREIGN KEY (statisticID) REFERENCES Statistic(statisticID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- ===========================
--- Inventory & Item Hierarchy
--- ===========================
-CREATE TABLE ItemPrototype (
-    prototypeID INT AUTO_INCREMENT PRIMARY KEY,
-    itemName VARCHAR(100) NOT NULL,
-    itemLevel INT NOT NULL,
-    itemPrice DECIMAL(10,2) DEFAULT 0,
-    itemMaxStackSize INT NOT NULL
-);
-
-CREATE TABLE InventorySlot (
-    characterID INT NOT NULL,
-    slotNumber INT NOT NULL,
-    prototypeID INT NOT NULL,
-    stackSize INT NOT NULL,
-    PRIMARY KEY (characterID, slotNumber),
-    CONSTRAINT fk_Inventory_charID FOREIGN KEY (characterID) REFERENCES `Character`(characterID) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_Inventory_prototypeID FOREIGN KEY (prototypeID) REFERENCES ItemPrototype(prototypeID) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE Consumable (
-    consumableID INT PRIMARY KEY,
-    CONSTRAINT fk_consumable_consumableID FOREIGN KEY (consumableID) REFERENCES ItemPrototype(prototypeID) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE EquippableItem (
-    equippableItemID INT PRIMARY KEY,
-    requiredLevel INT DEFAULT 1,
-    CONSTRAINT fk_Equippable_equippableID FOREIGN KEY (equippableItemID) REFERENCES ItemPrototype(prototypeID) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE Gear (
-    gearID INT PRIMARY KEY,
-    slotID INT NOT NULL,
-    CONSTRAINT fk_Gear_gearID FOREIGN KEY (gearID) REFERENCES EquippableItem(equippableItemID) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_Gear_slotID FOREIGN KEY (slotID) REFERENCES gearSlot(slotID) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE Weapon (
-    weaponID INT PRIMARY KEY,
-    jobID INT NOT NULL,
-    attackDamage INT NOT NULL,
-    CONSTRAINT fk_weapon_weaponID FOREIGN KEY (weaponID) REFERENCES EquippableItem(equippableItemID) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_weapon_jobID FOREIGN KEY (jobID) REFERENCES Job(jobID) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
--- ===========================
--- Equipped Gear Table
--- ===========================
-CREATE TABLE EquippedGear (
-    characterID INT NOT NULL,
-    slotID INT NOT NULL,
-    gearID INT NULL,
-    CONSTRAINT pk_equippedGear PRIMARY KEY (characterID, slotID),
-    CONSTRAINT fk_EquippedGear_charID FOREIGN KEY (characterID) REFERENCES `Character`(characterID) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_EquippedGear_slotID FOREIGN KEY (slotID) REFERENCES gearSlot(slotID) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_EquippedGear_gearID FOREIGN KEY (gearID) REFERENCES Gear(gearID) ON DELETE SET NULL ON UPDATE CASCADE
-);
 
 -- ===========================
 -- Gear Requirements

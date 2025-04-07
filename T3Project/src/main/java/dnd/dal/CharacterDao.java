@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CharacterDao{
@@ -61,6 +63,50 @@ public class CharacterDao{
 			}
  		}
 		
-	}		
+	}
+
+	public static List<GameCharacter> getCharsByFirstName(Connection cxn, String firstName) throws SQLException {
+		List<GameCharacter> chars = new ArrayList<>();
+		
+		String selectChars = """
+				SELECT characterID, playerID, firstName, lastName, clanID, currentJob, equippedWeapon
+					FROM `Character`
+					WHERE firstName LIKE ?
+					ORDER BY firstName ASC;
+				""";		// sort in alphabetical order
+		
+		try (PreparedStatement selectStmt = cxn.prepareStatement(selectChars)) {
+		      selectStmt.setString(1, "%" + firstName + "%");
+		      try (ResultSet results = selectStmt.executeQuery()) {
+		        while (results.next()) {
+					Player player = PlayerDao.getPlayerFromPlayerID(cxn, results.getInt("playerID"));
+					Clan clan = ClanDao.getClanFromClanID(cxn, results.getInt("clanID"));
+					Job currentJob = JobDao.getJobFromJobID(cxn, results.getInt("currentJob"));
+					Weapon equippedWeapon = WeaponDao.getWeaponFromWeaponID(cxn, results.getInt("equippedWeapon"));
+					
+					chars.add(new GameCharacter(results.getInt("characterID"), player, results.getString("firstName"), 
+							results.getString("lastName"), clan, currentJob, equippedWeapon));
+		        }
+		      }
+		    }
+		
+		return chars;
+	}
+	
+	public static GameCharacter updateCharFirstName(Connection cxn, GameCharacter c, String newFirstName) throws SQLException{
+		String updateChar = """
+				UPDATE `Character` SET firstName = ?
+				WHERE characterID = ?;
+				""";
+		
+		try (PreparedStatement updateStmt = cxn.prepareStatement(updateChar)) {
+			updateStmt.setString(1, newFirstName);
+			updateStmt.setInt(2, c.getCharacterID());
+			updateStmt.executeUpdate();
+			
+			c.setFirstName(newFirstName);
+			return c;
+		}
+	}
 }
 

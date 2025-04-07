@@ -115,14 +115,4 @@ public class GameCharacter {
 				+ ", lastName=" + lastName + ", clan=" + clan + ", currentJob=" + currentJob + ", currWeapon="
 				+ equippedWeapon + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }
