@@ -55,3 +55,4 @@ hs_err_pid*
 
 # Ignore test reports
 /test-output/
+/bin/
